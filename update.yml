@@ -1,0 +1,6 @@
+---
+- name: Update packages using apt-get
+  hosts: all
+  become: true
+  roles:
+    - name: quara.sysadmin.system_update
