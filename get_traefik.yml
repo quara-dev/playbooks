@@ -1,0 +1,13 @@
+---
+- name: Install or update Traefik Proxy using Docker
+  hosts: all
+  become: true
+  roles:
+    - name: quara.sysadmin.get_traefik
+      vars:
+        # Do not use lets encrypt (it does not work behind proxy)
+        traefik_enable_letsencrypt: false
+        # Enable HTTPS
+        traefik_enable_https: true
+        # Enable HTTPS to HTTP redirection
+        traefik_enable_https_redirect: true
