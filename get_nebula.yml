@@ -1,0 +1,49 @@
+---
+- name: Install or update nebula
+  hosts: all
+  become: true
+  roles:
+    - name: quara.sysadmin.get_nebula
+      vars:
+        nebula_version: 1.5.2
+        # Firewall rules
+        nebula_firewall_inboud:
+          # Allow ping
+          - port: any
+            proto: icmp
+            host: any
+
+          # Allow iperf tests
+          - port: 5201
+            proto: any
+            host: any
+
+          # Allow SSH access
+          - port: 22
+            proto: tcp
+            host: any
+
+          # Allow HTTP access
+          - port: 80
+            proto: tcp
+            host: any
+
+          # Allow HTTPS access
+          - port: 443
+            proto: tcp
+            host: any
+
+          # Allow NATS access
+          - port: 4222
+            proto: tcp
+            host: any
+
+          # Allow MongoDB access
+          - port: 27017
+            proto: tcp
+            host: any
+
+          # Allow debug access
+          - port: 8080
+            proto: tcp
+            host: any
