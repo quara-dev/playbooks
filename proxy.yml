@@ -1,0 +1,6 @@
+---
+- name: Configure system-wide proxy
+  hosts: all
+  become: true
+  roles:
+    - name: quara.sysadmin.system_proxy
