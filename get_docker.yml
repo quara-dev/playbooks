@@ -1,0 +1,8 @@
+---
+- name: Install or update Docker Engine CE
+  hosts: servers
+  become: true
+  roles:
+    - name: quara.sysadmin.get_docker
+      vars:
+        docker_swarm_init: false
