@@ -1,0 +1,24 @@
+---
+- name: Configure OpenSSH server
+  hosts: all
+  become: true
+  roles:
+    - name: quara.sysadmin.ssh_server
+      vars:
+        # Enable sshd
+        enable_sshd: true
+        start_sshd: true
+        # SSH listenning port
+        sshd_port: 22
+        # SSH listenning host
+        sshd_listen_address: 0.0.0.0
+        # Enable strict mode
+        sshd_strict_mode: "yes"
+        # SSH authorized keys file
+        sshd_authorized_keys: .ssh/authorized_keys
+        # Policy for root login
+        sshd_root_login: prohibit-password
+        # Enable password authentication (this does not concern root user by default)
+        sshd_password_authentication: "no"
+        # Enable public key authentication
+        sshd_public_key_authentication: "yes"
