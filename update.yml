@@ -4,3 +4,14 @@
   become: true
   roles:
     - name: quara.sysadmin.system_update
+
+- name: Update bluetooth packages using apt-get
+  hosts: ble
+  become: true
+  roles:
+    - name: quara.sysadmin.system_update
+      vars:
+        system_update_upgrade_dist: false
+        system_update_install_packages:
+          - bluetooth
+          - bluez

@@ -1,0 +1,66 @@
+---
+- name: Configure time synchronization
+  hosts: all
+  become: true
+  roles:
+    - name: quara.sysadmin.system_users
+      vars:
+        system_groups:
+          - name: docker
+            gid: 12345
+        system_users:
+          - name: quara
+            groups:
+              - docker
+              - adm
+              - dialout
+              - bluetooth
+            create_home: true
+            password_lock: true
+            sudo_user: true
+            passwordless_sudo: true
+            generate_ssh_key: true
+            ssh_authorized_keys:
+              # QUARA Admin
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDatmjoB/PensjlLNiNwIOtiXg0sgbw+ahB2aEwhzqwQ7weSusTps0DbMsqQ2lKHhcO//43jFehYSAAbRVHAox3YTPtWY1JT18AJTGhWOOt32+W91ZXoFQnQBcTQZs915WUYT2AlqXUdNgIu86lnfV1OmI0koLCVQqJ9P8SJLrCuq11me2lqJFofGDhkSmiJqi4EIPzsTA2pFCbx43h1sBEUIUE2VQAoI+kVG+wbXPtN+Teklb+1NHpxWZWJoh7lEoLZkQKA4W2ou30gZ1pbDndzXTVBVLI1jH6hpnL624H21ypE2NXA+bi6ULj4rooOhg8uG+wu6EdQoBn4hlsBJpFarQM856cXDOnIAcitRd1+D3ozBVS4BIbE5LQCnHsuv6cyNyJfR0d9N2HFd0Q6LgqasOVpZBL1XYst7QhBh1FZYrIK7KdB65Yo4c0XRjqt99m5i0SqqdH6oT7KWsaBMJz3VnoqPV1p/amTPnmYh4fcRX/KFvGJo/XmCzHFD3wP10= quara-admin
+              # @charbonnierg
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCx4UHTWUw9fK+Tgyydhxbymmmg4HcJyZJBXb7z9RvKqkeg08gazNIqs4BIeyiIbbKI7n7nFcFQFTA97ca2AVr3CtI9bBhZcxIXqisxfV38osuKfw2MwiCT2B8sgD17+6Ir7COFP7ILId4/Z4H1auV0EL9urLBPtr5fQ3Hxau03ZhWcAsWpTIRaTY+TnjXyj2cMU9GYx4BhuI1ovrx39WG7ZiJydAMrR5O/m8MQO7A3zpX62G4XgarnuN2+70ZkLTWXEBvcpVrCbHF8YKY7Z7ia3fHwvw631p7El7QczGG7nExwYizYEHJ4RWWm/pPBpbSHNB42oYCsQE5/gLbyhwJ21r4gzGOHvVK4wQV7TL6e5L03dXxub1ZFiN1rogAKjVxXrlPEpSvO1OFtWCbjSDVl5T6omenTyunaLg5YT4r+kJyDeg1QWZieG6KU5tXMDBmpjYT10K7AlyHVGh/fFQ2DRbHBef6+lrP4NywDDrayOgfXgLaSZYsc31GFFTtUOeM= charbonnierg@FRY10466
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDK86wz+fL9IFlZAmZw4MRBMtJo/lv2NCWYRTfXRsUPJ35CZuJBi88GnGIZ+SOyto4aQggH2BVLfLRsJc7/ZZ5rEj3budM6CGcmyGOm0GDjSPH/pJkusB18J3PEEmmFCqs7yzOHSXI1yVSy9UVetrBjTTtUCo4A92iCqY9nuCqCPnmfcRpXgeMOyV9uZ0BeqR+BJIMbkIVAI3nLLbvQzPUFgt6ZViCvFCCTFwuGg65ezDU1bI7SNruQXitseAj7aumPz8x9QJjNGUzh8x9KvmqVAU9Fh2RdGj6vR2TjF7d2JHbTfygFGqMnzuprwu/Vt/NbHpcrqpE8K/Hx5RauvEtj grenoble\charbonnierg@FRY10466
+              # @morandeaul
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0KU/D4Bz2uFuyWhJGJxgNqOhviEvnsdvZAPWQ0Jczk7V6dSoQpUCeWq64Rx+uVnyGwsgCZQbso52lHnEdwJ8FeV2CRFlimLVj9HzaEySBkRLZiyFRnxKqpjCYyRX0va2qIhK6lLAXvRUqS05ES8HYiHv89RzH7N+bfjY8eXLnUiMswOdDr1BVX0+ck9StXcnIcDlAtPwKr7hqhoRZ0wpKXnl05KffjGg1l+iwbxChmLbpcBtF5cVKfDp1HctcI5XB95Y5j5gWY43Asn7wt91YK4UTLbKSmd5pgolbw7E24jvGwUlG3JdROBRNGLAnXDnEOqDvrUoD8EvKFRojVnYLRXImGG9/41Qt97IuS6lzICtZPdvPyIr8a4zS/DFdsJnNZ9cA58XUnrCPy1gKAx7DVzNeAwjIK9HxK+BB4iAcSIhnNrHcfVpB2c3FAfaD9gxBvo0s5q13C4V/YxSZNqEyrjmi/4xY9Camfh88mPl3yZkz/IpyYFapGTuYyGXfSE0= morandeaul@FRY11116
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDLNRA3ehQzLhwF4YpTXayn5xj5zBzMEOeVv35KRlyur4YEJrNi8zCUtxpqxIPksjARzE0zzjOXE3Zjt8AoqCxTqJmChe7IuPAA+wnVTGMhWUqA4dI7K4wTYOOumlAEha2HzXa1v3H5YILo4/btXYpV69ZCeXuesxdHAAjb8IeVToFxk6cAG00F/BZGgLErit1I6/dXRNC2qLcyVet7OzTOxeYG8rkve4muYjRFLb9qiJ948lXIbRmuoc0sby6Cf4W/OiWHGQQc0zK1B1Qx1Ivr8PP6KWyXQ3IOMgo+2LK2bLAvz2qxv9SEGElGUyR+7r1GCdag32COvfETAg9o5IU6Y7Vz5JK5qsViyH8mre7iKoH9LCui35LtFgYK4wcjDg0KlJm1Qg1wHOVS4MJZsC67poKgxJrOqB1nmUvVaj7zPIlgT3o7/Hs0ZjW2ZeA3Y6d1/zAQ2Z+WNvk96EAZIEsZ0Zg15Aa/A72qQC066VFPcJSOAkn5BzrvINuYYw5bcdM= grenoble\morandeaul@FRY11116
+              # @zgardand
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPbLd4/9uXI16kk8kc3qtCFcY+dyrFBymd2KtrzL15i4ReyDLgvJsO2I+1TUzvPyA8AP9fxyrvX/Slu2NVC+t28hVnlCKQfXrtWq3lI1VNdEJi/Vh7shAstY9u3WVJRc5CgHl9HDcWT8gUNpgY4qaV0lDn3m8c8FPCY5TITxpCAW8isnm2goU+HqsDC2Vw0lNj7o0CgBWrF590ZzIUc42h03GfCsVQvHdfmqSnp+MMUK32EEmUP8MS6NzwuWyWJJt2QBODrVi0miVYkLvn5DzJLAtyIc+xFTH05PUIc31Rnmp2GGuX3Tu4Ob8dtHmxdYTRuwobh7z0TNRfVgPAlmYEh1gx0cesQ/PjK6jl+2k/93uWPLvfzricED8T3DSWu8ZpSI5sGN7gsHsDNsDJ6GhDiEm8B+Ja1RKM9QoqECR/Rd74g+sZeNqlzTDJXJD0AjG8GCSt3UV9GWlvM49RErZ61h6Rw09B9KCb+cNgVZT6wHan6OUbZozdkFkQ6G3ONG0= zgardand@FRY11037
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDdNfrBwJ/z10uev2Bc0kDdr4cyQwkiKhttPD+g/b5iFAb/ZPlr7xvNdKzJsleLdRJU8YzjHEJFoxulD0XZbzLktCqK557CLm7i9s+jTnWnAezPZGUkDQNPo3oJnF7znQ9kc9XmNbJoR5b/3uhjS0QeTCvSB2UmsWvU8X6nQOHOai/4uRqphr2MpX2ug1QVQcV93s0LwVc7ysOlXvcW9fi/XsO++p80tAbIvFl6lYN1x7jb7whd9GcE9qsMyfTCrm+nmX3U3qzPE+cRTFIt6pqoSl651aklFqvE80AeJW/o4Iz5iuN/bpGGKl4MDgr/GK3xe/R43p8DePXfijpxIrjl2dx9n7YuRm0g2Nm13+NW/MI+bCIMiSOsmywhhBzOI6Uhns1K1JzR+lBTy0TfTyf3ooatPx82XfRrjuRrBKwztyG1p8Y8c2NVgt8lav11AU8ZTlCBVhE+a9mgyKYFv7PzkdEobDvkbdob9EQLy3juOQ8qQXd2VXVAUe09XgkO2G8= grenoble\zgardand@FRY11037
+              # @aubourtg
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCyQ1CMOVl46aQH/ZSKHdfyYCP8NAiUUtQhIhFqbBgO0qTDhZgI0EQiHFnVmj2Smsa1bRmWTXXEDzaQMqpnSVXxEnHFypnzXtphb+1AP4FC0+e7HxD0/eTUfr3SbFaX8E64nbOQzlBel0KSHming3LYIRr6F4LzmmhuAhhTEvF1MyZoD0PohhpLXc4LqZLn9sDCpbN0fAX7yFJH2VWGmHg6agROMxuCpsu3UtwJz28WsLG3qzXDZ9Y7kegANSNHWN4wqzM0VkrDdlv+5saR242Ef2wiMRuYzMS0zoT58AbIWiV85fKBJAXfCn8VXylI1nxhNZH3gW9TE+WtIv69Jla0EtSE8lnsWS7Hiqo/8+PbxAvAABMOSz32oSGXnJkzRRIs/abN6ix7626ySlFxfJqKB24CXI0bsUjZ2jelxSf6o/3ZRlW9igla6WBZeL8GFcbvcE3mIJivtUmO3ejXleKZpFih8cSw3RnZSFBSHFTpD7GCYPW68Z+lgjhcotzVO4M= grenoble\aubourgt@FRY10822
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0eibopGVzYfhTpyfQtPD4OpvrwzEVCRiZJAuD/n4DUMTqco8+4uPrFw2uru0NgkSZnyZkpWK916+xD/SlmqvhFzsnK1Hp4P1ISppyv4yaPAwLWzqGsChSDewwtyh087j5Eity68KK+MQV/o9ijM5qctm8y14VpRVVm91HbrB0PNpyOToHfIOgCgaOZ+p+Gy5ooizTNOO3MXviDc4cyECtxL+Ab7Gz0N9bZ3gDEIw2I/4wpkAQMfnc0swh++ugjHJZUwvfEASjeV6J6dC8e6dbNqpU2RAgQRFKWHaAZyJQLdZHyBPyDWqQqHpCge3HS4cRSi7eTtczvY2zaYIxv37gZNL38swOeQToKKCMBsGDhxYlAmmi3x0hN4Ib4dLfWDJz/N6I12+YRcRP2+4365dbaOHnIVf464zZnPsPYN8U4KFmR9t4Fq298hj3UY295SBLUs+Uh6kS6T6h6fa5aAUmo9ky5iX6AZallz3PR+oqyyNkUsk9tErNMVT3iClmkWM= aubourgt@FRY10822
+              # @guedrias
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzsSaNwQIzrYED12iDGuZoDx1K8m0+w3kFvibNUbvJjIgzg7m2wjChqMnMc7vbSjOkG45/uy1vFHMW1SonzvyA0Yr1Yrfz2p8cY3ZGdpQT9Fjt/qUrY8oJ0CpR2cdV73tyHcZPDiytDIhQYAgepSEdrwZwUQVXhIEd5ri6OJIK0CBKaBHWUxYZ5O4ur6z1xOM8joaIhwDAdssOHxNIGqDS6SvOiaIUhDsInExSdebyw/nqB5HAjaOsbr+LZOMlo4pnc8rDY+ZqniacGN9LwSoUWOgPltovEgff3BpaFjYpRmWHV6D3/sG9ovfeRCdf2gRay1sDExQhXXK+cAEK0HGIwFQ88eRq7Ox9RnndgLsZ1KE6tn5KG5KgP+NSYrFmrx8gz27KiSOsFnD7K6qyzp2QcQ7M1lSo3RidkoPlSZw4xs2CpFpj2hmqZW0j5GC+pDRPnxk98nEjlIfGt+PlXiB076ujTKc1qrc6sfCB+LHqnTdX09wBNaqBUh4EEO3C/e0= grenoble\guedrias@FRY11032
+              # @duprelatourj
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCr3i32KSz9xgJO+mLUDFkTAwwCcElbghJ64NtuO3r5TEbLMV4xaN6c9QORgxA4Gbn53VZuPYPxP8QXYCIQp1HH90FqKBAg3NcbCvwvB96efIyjVP2CJ1WYOhCEW0fK7GV3/7ABNm2QunYIrMDVv8/2P2DMoi/O/UotBlThleM1rnTT0kys3D3dLpcDDzuCPJUBih6pYjxR8RprTu1/LdubZT+1tcrM3FTM9yFVNfchcqVR52fdsvAJxJpWy/EXLBHCyLSfUvKJIxCZKFV+hjm9Xdt6k/vyXvXk2laabDxqpuv7A2H6yiaGmpc6wXXVctsig6q3n29744ykQ87NW6md grenoble\duprelatourj@FRY10587
+              # @mishraa
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC25w3X8MaCEDz6qRV029QGriVDgIr1DXuCeA60CeNFEoLKWLa6pfvAT02bBARIOu3tIudLGE/Hlv7FsRzr9rM0HBzvEa/x0vs3hWnZg2HWU3f6eVB5FUlVbViUvJdJI/MZE2YsYq2QkjPahpaf59QcnAlWgh2Uwfi0zuRfkj+hID004DNCoNMa0s3sqTAxYhI1qCnRQPuDL1BxFsZ4rt4uh4obTyP5oWD09Dao5fnsUn/OtOHfZPxDuLwv17K3pXctjkL0IbvUGxvECBxWM8N94QBZKiXDDIK6hJhA1tYGNG4ARgZnVgzP2ePLwZ6YTK/nk0XRKw79Qdu+GfXi4/FBg097d2+zFCe0eGzuPFihwdl8p7hkFEuj1FhVVfiYoUgmCS/N++vtNoPBv5J0FDhsWvwtgkNt2pkk6SnOuve8rf+EQLN+HOSmeMHinfdJLpTmDfHQ2yu9Bifa3c0uBto69Ms2fdpQOnFT5vCKHBguc1ltcJBFLLLvAu9fCvAuUXs= ashutosh.mishra@araymond.com
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDbV8idYx2B+FWYEudO+82bjlG5qd89cSWgk/f2mNCCIamK5mt38Zp+/vbQh5zd0MBMDTXQUCQ3r7k2v7EV5eYOdyWw/hg/ecGcydOAzQXhTkNm+gyxOOKKdP7GtnOwssgKJvv8+zwx031N1x5BIz6zauInaXafRJFZrmxleBCcYqnVd2Pn0DT/Dg6fX5GIDVYQ42lQWli7Pj1eFKWuDb5aEgI0N5nDZzgTvcI8fC++AjNbBQHSMqtSOItxsJsqNgi34AkbFVNVQIVgeJCzZRS5hvCaTyXV3B3uHLXxFihfv4hAYONiUJEN8KWBRPX0ZUNMDB5Ei6u8spddb8/ctgPH mishraa@FRZ09036
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0AA63wuZ/0RzybnXR8zS2ApD9yGEqsotGE/0xwVcPWaPnQUPrXqhmQAvRp3BUCKZ8oF+DsvIvS96FtutOkI1qeOhXoHhuEh829SdKY+au2+vkKFcJhM9bFu2vj/TA+rGN1ERfAxGW/KNwaf7fK59IMLfgIYHXoITd0Hh+Bw1o2nHwXmWzxqGrYavWfU3yruZpxZoTG1n5L9WW1c0vSgdCCcHxjFj6KsiuYOXBz4Q9pwMzSZwGtO4tI0rVBQmGAaJ3s5Nu8A2jqCLVj9FXhVbQ6RgFnWFUaX9qI4ClgtNtfEvveNCrmgP0arK2rrGv6UQ4gLoBd6xnbVjYxWu4+ShNqhH+jnzgNUT5gcodPeP1gLvH9FyDAU8tjmGErGmEPUMmgR27fbhR5PEYLXn0sZBq356KIvH4pLkSPggXlFQb+P/5KXcvE+xGVpp7fquCa3vDhD4cTTyKJhhcZKBKwvV8qLakkCsNlnqL45jJblV6zh7YIwo2VHdBRmHsUa0wT38= ashutosh.mishra@araymond.com
+              # @cbenavides
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDGrXWac/ymW6Rio+asx0huzYNUK5fIdtrvdsS9Osl8gvlolYIagxvzcVf+qLqEmNHuStzn50RpTI5ENqZ4IlUpeCNj6XahXFPlJqY+CxTfJfPYkIV0E4sQ7IFEQWbVxodfWkWMmu8EM8wkK/4aQkRtZoaNYorT2efyjYfmFy7NB5jdCPOvyz9kw1Np/07KT7r8DPtOQFTqiFcKmIku6QrnsHORZ9vOpY3LM4Z8oociaT5kMwnBTm9VsP7ulde26Q2e+PmbMrxZSpsXrjrIhRCJiMSIKgd8zbQ8QKXNAat3nCd7IHd3o8TMU8g8ByIXVKra8PCo6mHzU8A2KKDNLMAGz+E/gzS1R/Vb1mJMPLNB13WLKNF/IuHCxmsieIeOAUYPrx4Eli8fOUxquY4b5tRZ+VItVBz/z8CL71sz6Yj1mlcUrEiZ70l5sLz0vWp+SA/tPA13dznhqyyR0EAdiTG91Q8wiqrZQZj5QJh1ncPrlfjCer/2KUiHIbCrPokIoTlXCCRsRNcT05z3conz1Gs9VuPlvriaVKqO5M2tkEqsUNQvHD6s/KSnMeURoI7hq8ZXfteUA6QFpmPr2MHvqJidgKrghqBFzjj2pw7ueTerAvBKAyfN8kcXfvvi+dWhfggqBGYdFzIbu4SFsxKt8Pi2JYtmKyrwvkHhPPnD2iCK/w== carlos.benavides@capgemini.com
+              # @kvincent
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC1jJl9NrYctfU/V5S00MgJUwmkTaa9hNQ9lR6L/a9YR/rY1hr3c9TLvGeZDV4xiPhpqcvHRcfrdkvRggRdNARIfeMujopjQVyN6RnPiDNYxbgUmGogfTncrcyTXnjr2K627E0CbDzsvulkdJppm4/E415yNgmHRBe0CFQMH/IQGkxEfEjlBY7bo/53YMIzq0b3Ai9jqnfJj2VN84rKGrzubPzO0UOxyux7HNwH3VMvzZ/acT6V0X9aDRelH04j/djtYgg8lT7+Ao4ZtOdDFBWRU5p3XrqFQVtYSEuYwGNwSiJ5MokgnxBQrQ+rTkb0IagbGiFyUszZM4ojNhKs8w9T corp\kyvincen@LFR043704
+              # @francoisc
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3gwOS+tSbAIBJkzGqS4c//g1S9pGwfjBkl7Ga21vAbAJ0rLj+yYB3x4u9ffXHp6ubrndpZeQjtmptSxZ0d5ufYzkdkS5jmX5GOvPNdrrQrZgI27NcNvvz45Y2QK2UAUD39d0W+QMiUIZlof1qQ59j5+LA09y9llf+ZPRIW+pvGFJnO0SLoUY8cebwtuSdDpAOxKBO2Y4G6jbIqHEgU9Q6w86AKHbKxTYcQKy7g2TT9MIE0pVFGyXmhIPN9ZtHQmzZK8A1n4GrgQVsSWD60VNKddJ4ZOgS80Joyi4YYAkvxVeBJ0Stfav2v0k1kN+NuDpMkQN4e9xK5pvjFgIQIwTSmH54dtnoQO8IH/cTF/cpGXbTTsR6unL1th6Yh5vBUaJ/vdFV9fbh2+FKgYou1BX11+UA0Po7HsCXHkzrf02xhqUm0W8O9np5VEBokj3bZa8TFfwY5ZH+hDMIU+wA0Trc2dDxENhTurm40n574DiIzWrQZ6rtlu9tiwZsCOWJjAM= francoisc@FRY11216
+          - name: charbonnierg
+            groups:
+              - docker
+              - adm
+              - dialout
+              - bluetooth
+            create_home: true
+            password_lock: true
+            sudo_user: true
+            passwordless_sudo: true
+            generate_ssh_key: true
+            ssh_authorized_keys:
+              # @charbonnierg
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCx4UHTWUw9fK+Tgyydhxbymmmg4HcJyZJBXb7z9RvKqkeg08gazNIqs4BIeyiIbbKI7n7nFcFQFTA97ca2AVr3CtI9bBhZcxIXqisxfV38osuKfw2MwiCT2B8sgD17+6Ir7COFP7ILId4/Z4H1auV0EL9urLBPtr5fQ3Hxau03ZhWcAsWpTIRaTY+TnjXyj2cMU9GYx4BhuI1ovrx39WG7ZiJydAMrR5O/m8MQO7A3zpX62G4XgarnuN2+70ZkLTWXEBvcpVrCbHF8YKY7Z7ia3fHwvw631p7El7QczGG7nExwYizYEHJ4RWWm/pPBpbSHNB42oYCsQE5/gLbyhwJ21r4gzGOHvVK4wQV7TL6e5L03dXxub1ZFiN1rogAKjVxXrlPEpSvO1OFtWCbjSDVl5T6omenTyunaLg5YT4r+kJyDeg1QWZieG6KU5tXMDBmpjYT10K7AlyHVGh/fFQ2DRbHBef6+lrP4NywDDrayOgfXgLaSZYsc31GFFTtUOeM= charbonnierg@FRY10466
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDK86wz+fL9IFlZAmZw4MRBMtJo/lv2NCWYRTfXRsUPJ35CZuJBi88GnGIZ+SOyto4aQggH2BVLfLRsJc7/ZZ5rEj3budM6CGcmyGOm0GDjSPH/pJkusB18J3PEEmmFCqs7yzOHSXI1yVSy9UVetrBjTTtUCo4A92iCqY9nuCqCPnmfcRpXgeMOyV9uZ0BeqR+BJIMbkIVAI3nLLbvQzPUFgt6ZViCvFCCTFwuGg65ezDU1bI7SNruQXitseAj7aumPz8x9QJjNGUzh8x9KvmqVAU9Fh2RdGj6vR2TjF7d2JHbTfygFGqMnzuprwu/Vt/NbHpcrqpE8K/Hx5RauvEtj grenoble\charbonnierg@FRY10466
