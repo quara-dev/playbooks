@@ -1,6 +1,6 @@
 ---
 - name: Configure time synchronization
   hosts: all
+  become: true
   roles:
     - name: quara.sysadmin.timesync
-      become: true
