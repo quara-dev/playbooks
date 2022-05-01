@@ -1,11 +1,6 @@
 ---
-- hosts: all
-  tasks:
-    - name: test
-      debug:
-        msg: Hello
-
 - name: Configure time synchronization
   hosts: all
   roles:
-    - quara.sysadmin.timesync
+    - name: quara.sysadmin.timesync
+      become: true
