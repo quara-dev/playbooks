@@ -1,0 +1,11 @@
+---
+- name: Install or update MongoDB using Docker
+  hosts: all
+  become: true
+  roles:
+    - name: quara.sysadmin.get_mongo
+      vars:
+        mongo_image: mongo:4.0
+        mongo_data_volume_src: /var/lib/mongo/data
+        mongo_config_volume_src: /var/lib/mongo/config
+        mongo_published_port: 27017
