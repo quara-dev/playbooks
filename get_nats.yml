@@ -1,0 +1,13 @@
+---
+- name: Install or update NATS Server using Docker
+  hosts: all
+  become: true
+  roles:
+    - name: quara.sysadmin.get_nats
+      vars:
+        nats_image: nats:latest
+        nats_home: /etc/nats
+        jetstream_data_volume_src: /var/lib/nats/jetstream
+        nats_jwt_volume_src: /var/lib/nats/jwt
+        nats_published_port: 4222
+        nats_leafnodes_port: 7422
